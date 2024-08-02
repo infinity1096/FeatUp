@@ -273,7 +273,13 @@ class JBUStack(torch.nn.Module):
         source_4 = self.upsample(source_2, guidance, self.up2)
         source_8 = self.upsample(source_4, guidance, self.up3)
         source_16 = self.upsample(source_8, guidance, self.up4)
-        return self.fixup_proj(source_16) * 0.1 + source_16
+        
+        return [
+            self.fixup_proj(source_16) * 0.1 + source_16,
+            source_8,
+            source_4,
+            source_2,
+        ]
 
 
 class Bilinear(torch.nn.Module):
